@@ -23,7 +23,7 @@ AgentSchema.set('toJSON', {
 });
 
 
-// Let's encrypt our passwords using only the model!
+// Let's encrypt our names using only the model!
 // This is a hook, a function that runs just before you save.
 AgentSchema.pre('save', function(next) {
     var agent = this;
@@ -39,4 +39,5 @@ AgentSchema.pre('save', function(next) {
     next()
 });
 
-module.exports = mongoose.model('Agent', AgentSchema);
+var Agent = mongoose.model('Agent', AgentSchema);
+module.exports = Agent;

@@ -14,4 +14,4 @@ router.route('/agents/:id')
   .put(agentsController.updateAgent)
   .delete(agentsController.removeAgent);
 
-module.exports       = router;
+module.exports = router;

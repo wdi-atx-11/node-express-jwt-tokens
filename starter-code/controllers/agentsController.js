@@ -1,4 +1,5 @@
-var Agent = require('../models/agent');
+var db = require('../models');
+var Agent = db.Agent;
 
 // INDEX
 function getAll(request,response){
@@ -38,9 +39,12 @@ function updateAgent(request, response){
   Agent.findById({_id: id}, function(error, agent) {
     if (error) response.json({message: 'You seem to be mistaken, we have no agent with that identity.'})
 
-    if(request.body.name) agent.name = request.body.name;
-    if(request.body.codename) agent.codename = request.body.codename;
-
+    if(request.body.name) {
+      agent.name = request.body.name;
+    }
+    if(request.body.codename) {
+      agent.codename = request.body.codename;
+    }
     agent.save(function(error) {
       if (error) response.json({message: "There seems to be some error in updating your agent."})
 

@@ -1,21 +1,15 @@
----
-title: API Authentication with Express - Tokens
-type: Lesson
-duration: "1:25"
-creator:
-    name: Micah Rich
-    city: LA
-competencies: Server Applications
----
+# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) API Authentication with Express - Tokens
 
-# API Authentication with Express - Tokens
+### What are the objectives?
 
-### Objectives
+*After this workshop, developers will be able to:*
 - Understand why authentication tokens are commonly used when interacting with APIs
 - Add a token strategy to an application
 - Authenticate a user based on their token
 
-### Preparation
+### Where should we be now?
+
+*Before this workshop, developers should already be able to:*
 
 - Build a basic Express app
 - Understand foundational concepts in authentication & encryption
@@ -38,17 +32,16 @@ You can play with encoding/decoding the data over at their site as an example. H
 
 <img width="750" alt="JWTs" src="https://cloud.githubusercontent.com/assets/25366/9151601/2e3baf1a-3dbc-11e5-90f6-b22cda07a077.png">
 
-#### Just like cookies, mmmm....
+#### Just like cookies, hmmmm....
 
 In the example above, you'll notice that there are 3 parts. The payload is the one we care the most about, and it holds whatever data we decide to put in there. It's very much like a cookie; we put as few things in there as possible – just the pieces we really need.
 
 Applications can save a JWT somewhere on a user's computer, just like a cookie. Because JWTs can be encrypted into a single string, we can _also_ send it over HTTP really, really easily. Which means it'll work in any server/client scenario you can imagine. Quite nice.
 
-## Starter Express App - Independent (5 mins)
-
+## Explore the `starter-code` code
 Now, before we talk specifically about JWTs, we've built a really basic starter Express app to hack on for a few minutes. Take 5 minutes to look through it and see what you notice. There are one or two things you might see that are different, but get familiar with what we're working with.
 
-## What's different? - Demo (10 mins)
+## What's different?
 
 You might notice some interesting things in the `AgentSchema`.
 
@@ -376,6 +369,3 @@ In the lab after this, you'll be implementing this all by yourself, from scratch
 - What is a JWT? Why is useful for authorizing an API?
 - How do you create a JWT in an endpoint in your Express app?
 - How do you secure an endpoint using a JWT?
-
-
-
