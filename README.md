@@ -14,7 +14,7 @@
 - Build a basic Express app
 - Understand foundational concepts in authentication & encryption
 
-## Tokens, The Basics - Intro (10 mins)
+## Tokens, The Basics
 
 When building APIs, authentication is crucial. When building an API, you're often giving access to private, sometimes sensitive information, and we do not want to be responsible for secrets falling into the wrong hands. It's hard to be too careful, so today, we're going to learn a way to control access to an API that is both simple and secure.
 
@@ -38,7 +38,7 @@ In the example above, you'll notice that there are 3 parts. The payload is the o
 
 Applications can save a JWT somewhere on a user's computer, just like a cookie. Because JWTs can be encrypted into a single string, we can _also_ send it over HTTP really, really easily. Which means it'll work in any server/client scenario you can imagine. Quite nice.
 
-## Explore the `starter-code` code
+## Explore the `starter-code`
 Now, before we talk specifically about JWTs, we've built a really basic starter Express app to hack on for a few minutes. Take 5 minutes to look through it and see what you notice. There are one or two things you might see that are different, but get familiar with what we're working with.
 
 ## What's different?
@@ -77,10 +77,10 @@ AgentSchema.set('toJSON', {
 
 #### 2. Encrypting Passwords in the Model, without Passport
 
-Now, if we're not using password, and we still need to do some encryption, we can. We can actually use one of mongoose's built-in hooks – `AgentSchema.pre` – to run a function before we save a document.
+Now, if we're not using a `password` attribute, and we still want to do some encryption for fun, we can. We can actually use one of mongoose's built-in hooks – `AgentSchema.pre` – to run a function before we save a document.
 
 ```js
-// Let's encrypt our passwords using only the model!
+// Let's encrypt our name using only the model!
 // This is a hook, a function that runs just before you save.
 AgentSchema.pre('save', function(next) {
   var agent = this;
@@ -101,7 +101,7 @@ While this is a silly example, because we're still saving the name as plaintext,
 
 This is one of a few ways to get to the same end goal. Since we're not using Passport today, it makes sense to show another way to encrypt information.
 
-#### 3. Hiding unencryptedName in getAll
+#### 3. Hiding `unencryptedName` in `getAll`
 
 So we're encrypting our agent's names (for their security).
 
@@ -127,7 +127,7 @@ For more info on `.select`, check out the [documentation](http://mongoosejs.com/
 So if you start up the app and make an agent:
 
 ```
-curl -X POST 127.0.0.1:3000/api/agents -d 'name=James+Bond&codename=007'
+curl -X POST localhost:3000/api/agents -d 'name=James+Bond&codename=007'
 ```
 
 We can see that `http://localhost:3000/api/agents` returns data like this:
@@ -159,12 +159,12 @@ While `https://localhost:3000/api/agents/55c65c300bb7305be9517c4d` returns this:
 
 Now – we have to make sure only people we _allow_ can see the latter.
 
-## The Main Feature, JWTs - Codealong (5 mins)
+## The Main Feature, JWTs
 
 We'll have to install a couple npm modules to start working with JWTs & authenticating via tokens.
 
-```
-npm install jsonwebtoken express-jwt --save
+```bash
+npm install --save jsonwebtoken express-jwt
 ```
 
 Now, of course, we have to require them. Later, you could extract this to a config file if you'd like, but for now let's throw it in `app.js`:
@@ -178,18 +178,20 @@ jwt         = require('jsonwebtoken'),
 app         = express();
 
 // A secret phrase that only your app knows, so encryption can be consistent. We'll use this later.
-var secret = "onhermajestyssecretservice";
+var secret = "spectreSkyfallQuantumSolace";
 ```
 
 Now there are 3 things we're going to need to write:
 
-- An endpoint to create a token
-- A middleware that will check for the token
-- An error handler for when there _isn't_ a token
+- [ ] An endpoint to create a token  
+
+- [ ] A middleware that will check for the token  
+
+- [ ] An error handler for when there _isn't_ a token
 
 That's it.
 
-## Creating a token - Codealong (10 mins)
+## Creating a token
 
 We don't currently have a controller for authorization, so we're going to put our auth endpoint right in `app.js`. You could (and probably should later) extract it out, so that `app.js` doesn't have a bajillion lines of code in it.
 
@@ -230,10 +232,10 @@ The `myInfo` section is easy – it's whatever information might be useful to yo
 
 The next part, we're using our `jwt` library, and it just takes a few arguments. This comes from the documentation, but basically we pass it the _payload_, aka `myInfo`, and pass it that secret phrase we made earlier (so that tokens can be encrypted consistently), and we have a token.
 
-Finally, we just send that shnaz as JSON, just like you normally do. Let's try our endpoint and see if we get a token back, using something like [Insomnia](http://insomnia.rest/) or [Postman](https://www.getpostman.com/) - however, you can also cURL:
+Finally, we just send `myInfo` and the `token` as JSON, just like you normally do. Let's try our endpoint and see if we get a token back, using something like [Insomnia](http://insomnia.rest/) or [Postman](https://www.getpostman.com/) - however, you can also cURL:
 
 ```bash
-curl -X POST 127.0.0.1:3000/api/authorizations
+curl -X POST localhost:3000/api/authorizations
 ```
 
 We should get back something like this:
@@ -252,7 +254,7 @@ We should get back something like this:
 }
 ```
 
-## A middleware to check for our token - Codealong (5 mins)
+## A middleware to check for our token
 
 Next up, we have to start restricting access. This is supremely easy, since we're using `expressJWT`. It's built in.
 
@@ -272,8 +274,7 @@ And hopefully it's apparent, but you can customize the URLs you need to restrict
 
 That's it. Now the last step.
 
-## An error handler for when there isn't a token - Codealong (10 mins)
-
+## An error handler for when there isn't a token
 _Technically_, our app is good to go. If you try to access one of your agents, you won't be able to. You'll see a bunch of junk that looks like this:
 
 <img width="795" src="https://cloud.githubusercontent.com/assets/25366/9152366/3074b6be-3dda-11e5-8104-dba53428e936.png">
@@ -336,7 +337,7 @@ Boom! Now let's see what happens when we try to access an agent:
 
 A far more beautiful thing.
 
-## Wait, don't leave us – how _do_ we access it? - Codealong (5 mins)
+## Wait, don't leave us – how _do_ we access it?
 
 Last but not least, we need to, um, actually access that resource. Can we now?
 
@@ -350,9 +351,7 @@ curl http://localhost:3000/api/agents/55c65c300bb7305be9517c4d --header "Authori
 
 If you're using a tool other than CURL, look for where you can add in custom headers:
 
-<img width="700"  src="https://cloud.githubusercontent.com/assets/25366/9152408/2bc713c6-3ddc-11e5-8252-588052f1ed2a.png">
-
-<img width="700" src="https://cloud.githubusercontent.com/assets/25366/9152409/2bc90668-3ddc-11e5-83ee-d3473c33205b.png">
+<img width="700"  src="https://cloud.githubusercontent.com/assets/4304660/26286645/eee57226-3e2f-11e7-8c0f-6f06a6945964.png">
 
 So, just like a client would have to, you'd:
 
@@ -362,7 +361,7 @@ So, just like a client would have to, you'd:
 
 And there you have it. It's really only a few lines of code we had to write, and once you combine it with bcrypt and hashed passwords, you've got yourself a secure API that can be authorized with a single string of characters.
 
-## Conclusion (5 mins)
+## Conclusion
 
 In the lab after this, you'll be implementing this all by yourself, from scratch, so ask questions if you have them!
 
