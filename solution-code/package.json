@@ -1,13 +1,13 @@
 {
   "name": "token-auth-lesson",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "an example of using token authentication with JWTs",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "micah rich",
+  "author": "Justin Castilla",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^0.8.4",
@@ -15,6 +15,7 @@
     "express": "^4.13.3",
     "express-jwt": "^3.0.1",
     "jsonwebtoken": "^5.0.4",
-    "mongoose": "^4.1.1"
+    "mongoose": "^4.1.1",
+    "morgan": "^1.8.1"
   }
 }
