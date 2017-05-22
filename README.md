@@ -212,7 +212,7 @@ Pseudocode successful. Let's fill out these bits. Honestly, in this example, we'
 
 ```js
 //app.js
-app.post('/api/authorizations', function(request, response){
+app.post('/api/authorization', function(request, response){
   // some code to check that a user's credentials are right #bcryptmaybe?
 
   // collect any information we want to include in the token, like that user's info
@@ -235,13 +235,13 @@ The next part, we're using our `jwt` library, and it just takes a few arguments.
 Finally, we just send `myInfo` and the `token` as JSON, just like you normally do. Let's try our endpoint and see if we get a token back, using something like [Insomnia](http://insomnia.rest/) or [Postman](https://www.getpostman.com/) - however, you can also cURL:
 
 ```bash
-curl -X POST localhost:3000/api/authorizations
+curl -X POST localhost:3000/api/authorization
 ```
 
 We should get back something like this:
 
 ```js
-// http://localhost:3000/api/authorizations
+// http://localhost:3000/api/authorization
 {
     "agent": {
         "name": "James Bond",
@@ -355,7 +355,8 @@ If you're using a tool other than CURL, look for where you can add in custom hea
 
 So, just like a client would have to, you'd:
 
-1. POST to your `authorizations` endpoint!
+1. POST to your `
+` endpoint!
 2. Copy that token!
 3. GET to a specific agent's endpoint, with an Authorization header!
 
